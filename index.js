@@ -1,12 +1,8 @@
+// Function that rotates the matrix once by 90 degrees clockwise
 function rotateMatrix(m) {
   let originalM = [...m];
   let size = m[0].length;
-  let newM = [];
-  const zeroArray = [];
-
-  while (zeroArray.length !== size) {
-    zeroArray.push(new Array(size).fill(0));
-  }
+  let rotatedMatrix = [];
 
   for (let j = 0; j < size; j++) {
     let newRow = [];
@@ -17,26 +13,34 @@ function rotateMatrix(m) {
         newRow[i] = originalM[i][j];
       }
     }
-    newM[j] = [...newRow.reverse()];
+    rotatedMatrix[j] = [...newRow.reverse()];
   }
 
-  m = [...newM];
-
-  
-
-  return m;
+  return rotatedMatrix;
 }
 
+// Function that allows to rotate matrix by user-defined 'n' times
 function rotateMatrixNtimes(m,n) {
+  
+  // Make copy for further use
+  let originalM = [...m];
+
+  // Rotate Matrix
   for (let i = 0; i < n; i++) {
     m = rotateMatrix(m);
+  }
+
+  // Fill diagonals
+  for (let i = 0, j = m[0].length - 1; i < m[0].length; i++) {
+    m[i][i] = originalM[i][i];
+    m[i][j] = originalM[i][j];
+    j--;
   }
 
   return m;
 } 
 
-const mockMatrix2 = [[4,21,4,1,3],[12,54,32,32,2],[1,3,5,12,26],[87,4,3,9,8],[1,4,23,41,3]];
-const mockMatrix = [[1,2],[3,4]];
+const mockMatrix = [[1,2,3],[4,5,6],[7,8,9]];
 
 console.log('Original matrix:',mockMatrix);
 console.log('1 rotation:',rotateMatrixNtimes(mockMatrix,1));
@@ -44,4 +48,4 @@ console.log('2 rotations:',rotateMatrixNtimes(mockMatrix,2));
 console.log('3 rotations:',rotateMatrixNtimes(mockMatrix,3));
 console.log('4 rotations:',rotateMatrixNtimes(mockMatrix,4));
 
-module.exports = rotateMatrix;
+module.exports = rotateMatrixNtimes;
